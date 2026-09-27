@@ -1,6 +1,6 @@
 # Color and optional retouching
 
-Use this guidance when the user requests grading or beauty work. Do not infer permission for face or body reshaping from a generic request for a polished edit.
+This is optional stage 4, after scripts, voice, and the completed base video edit. Use it only when the user requests grading or beauty work. Keep a separate derivative of the base; stage 3 does not automatically apply these treatments. Do not infer permission for face or body reshaping from a generic request for a polished edit.
 
 ## Color
 

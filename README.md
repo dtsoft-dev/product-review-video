@@ -1,10 +1,21 @@
 # Product Review Video
 
-A Codex skill for turning supplied product footage, narration, and scripts into finished review and affiliate videos for TikTok, Reels, and Facebook.
+A Codex skill for creating finished review and affiliate videos for TikTok, Reels, and Facebook: **Scripts → Voice → Video edit → Optional color / beauty**.
 
 It guides the agent through footage selection, text design, movement-matched transitions, review, and delivery. The guidance incorporates fixes from iterative editing: floating headline panels, jumping subtitles, disconnected CTAs, awkward outfit changes, and repeated closing actions.
 
 **This repository contains agent instructions and an installer.** It does not include a video renderer, private footage, narration, fonts, a sample commercial campaign, or a paid-service subscription. The skill works with the editing tools available in your project. Installing it does not install those tools or render a video by itself.
+
+## The workflow
+
+| Stage | What happens |
+| --- | --- |
+| **1. Scripts** | Use your final script or draft and settle the spoken copy, hook, product evidence, and CTA. |
+| **2. Voice** | Use your recording, or ask you to choose an available ElevenLabs model and voice, delivery style, pace, and take count before generation. Resolve the selected narration and its timing. |
+| **3. Video edit** | Build the complete base video with our headline, subtitle, demonstration, zoom, outfit-transition, color-gallery, and ending-continuity improvements. No new beauty processing or creative color grading. |
+| **4. Optional color / beauty** | If requested, create a separate color-graded or subtly retouched derivative. Preserve facial structure, product appearance, and the completed edit. |
+
+Completed stages are reused during revisions. Changing a headline does not trigger a new script or voice. If stage 4 is not requested, the base video is the finished deliverable; it is not blocked on an enhancement decision.
 
 ## Install in Codex
 
@@ -52,6 +63,19 @@ The installer refuses to overwrite an existing skill without `--update`. Updates
 
 To uninstall, remove only the installed `product-review-video` folder from your agent's skills directory and restart Codex. Your editing projects and backup copies remain separate.
 
+## Connect ElevenLabs for generated voice
+
+This is an optional integration for stage 2. You do not need ElevenLabs when supplying your own narration.
+
+1. Install and connect an ElevenLabs plugin/connector in your agent that exposes speech generation, available voices, and models. The skill installer does not install or authenticate that connector.
+2. Ask the skill to generate narration after the script is settled. It discovers available models and voices, shows relevant choices and existing previews, and asks for your selection before generation. If you already supplied your choices or explicitly say “choose for me,” it uses that instruction.
+3. Choose language/accent, delivery style, pace, and the number of takes as needed. Available technical settings depend on the model and interface. The skill records your choices and does not silently generate extra alternatives.
+4. Select a take when you requested alternatives. The chosen audio is saved into the editing project and aligned to the actual speech before the video edit begins.
+
+For an existing API-based setup, the agent can instead use the official ElevenLabs SDK/API with `ELEVENLABS_API_KEY` configured privately in its environment or secret storage. Do not paste keys into prompts or commit them. See [ElevenLabs text-to-speech documentation](https://elevenlabs.io/docs/overview/capabilities/text-to-speech) for service capabilities and [the integration reference](skills/product-review-video/references/elevenlabs.md) for discovery, generation, status tracking, and audio handoff.
+
+Generating speech uses your ElevenLabs account and credits. Installing this skill does not start generation. No fixed catalog of voices or models is bundled: choices are discovered from the connected account. If no connector or API access exists, the agent asks you to connect ElevenLabs or provide a recording.
+
 ## Use it
 
 Provide the project path, footage, voiceover, script, target format, and any visual reference. The skill inspects the existing project before choosing tools or creating outputs.
@@ -61,6 +85,18 @@ Use $product-review-video in /path/to/my-product-project.
 Use the videos in inputs/videos and the supplied voice.mp3 and script.
 Create a 9:16 review video with readable subtitles, restrained transitions,
 and detail zooms. Deliver the MP4, SRT, cover, and editable project.
+```
+
+To write a script and generate narration:
+
+```text
+Use $product-review-video in /path/to/my-product-project.
+First draft a Vietnamese affiliate review script using my product details.
+Then use ElevenLabs: show me available model and voice choices before
+generating, and ask about delivery style, pace, and number of takes.
+Once the voice is selected, complete the video edit with fixed subtitles,
+reference-style headlines, smooth outfit changes, and a continuous ending.
+Skip color grading and beauty for now; keep those as an optional next stage.
 ```
 
 An example revision request:
@@ -97,6 +133,8 @@ Keep the narration, text layout, transitions, and ending unchanged.
 
 | Area | Editing guidance |
 | --- | --- |
+| Scripts | Settle spoken copy before voice generation; keep shot directions separate. |
+| ElevenLabs voice | Ask for model and voice selection, discover current options, resolve takes, and align the chosen audio before editing. |
 | Headlines | Exact requested wording, centered layout when requested, reference font hierarchy, contrast without detached panels. |
 | Subtitles | Speech-aligned phrases, fixed lower-screen anchor, consistent region height, restrained stroke and translucent backing. |
 | Hook text | Avoid a duplicate opening subtitle when the headline intentionally carries the hook. |
@@ -104,7 +142,7 @@ Keep the narration, text layout, transitions, and ending unchanged.
 | Outfit transitions | Match head/body turn direction, framing, and timing; review each join in motion. |
 | Product evidence | Align putting-on demonstrations, detail zooms, and real variant images to narration. |
 | Ending continuity | Remove repeated, reversed, or overlapping actions instead of concealing them with dissolves. |
-| Optional retouching | Selective skin treatment, natural color, protected facial geometry, cautious body adjustment only when requested. |
+| Optional color / beauty | Separate stage after the base edit: natural color, selective skin treatment, protected facial geometry, body adjustment only when requested. |
 | Delivery | Final MP4, captions, cover, portable edit, review notes, and checks on the actual export. |
 | Version management | Lock approved masters, create separate derivatives, preserve dependencies, and remove old versions only when requested. |
 
@@ -128,6 +166,7 @@ skills/product-review-video/
   SKILL.md
   agents/openai.yaml
   references/
+    elevenlabs.md
     typography.md
     continuity.md
     retouching.md

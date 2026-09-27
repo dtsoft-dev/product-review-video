@@ -1,4 +1,4 @@
 interface:
   display_name: "Product Review Video"
-  short_description: "Edit footage and narration into polished social videos"
-  default_prompt: "Use $product-review-video to turn my footage, script, and voiceover into a finished product review video."
+  short_description: "Scripts, voice, video edits, and optional beauty finishing"
+  default_prompt: "Use $product-review-video to prepare my script, use my narration or ask me to choose an ElevenLabs model and voice, then edit the video and apply color or beauty finishing only if requested."

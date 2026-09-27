@@ -2,6 +2,8 @@
 
 ## Review the edit and the file
 
+Record scripts and voice as resolved before the timed base edit. For generated narration, retain the selected model/voice/take and audio asset in the job notes. Mark optional color/beauty finishing as requested, completed, or skipped; a skipped stage does not prevent delivery of the base edit.
+
 Before rendering, validate source ranges, font loading, missing assets, final frame count after overlaps, and caption timestamps. Use the existing project's validator when available.
 
 Review a preview in motion, then check representative frames in the final export:
